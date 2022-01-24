@@ -22,6 +22,7 @@ public class TilePicker : MonoBehaviour
     public AudioClip loseSound;
     public AudioClip winSound;
     public ParticleSystem winParticles;
+    Coroutine gameLoop;
 
     // Start is called before the first frame update
     void Start()
@@ -43,7 +44,8 @@ public class TilePicker : MonoBehaviour
     IEnumerator gameStart() {
         yield return new WaitForSeconds(2);
         makeSound.Play();
-        StartCoroutine(CountDown());
+        
+        gameLoop = StartCoroutine(CountDown());
         gameInstructions.text = "";
     }
     // Update is called once per frame
@@ -100,5 +102,6 @@ public class TilePicker : MonoBehaviour
     public void PlayLose() {
         makeSound.Stop();
         makeSound.PlayOneShot(loseSound);
+        StopCoroutine(gameLoop);
     }
 }
